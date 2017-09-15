@@ -73,9 +73,11 @@ class HoldExpiringMapping(MutableMapping):
 
     This object is NOT THREAD SAFE!!! It is asyncio-safe, however.
 
-    The add() method adds an item with an optional timeout. (Items added with []
-    access do not have timeouts.) Before any individual access to an item, its
-    timeout is checked, and the item is removed if timeout has expired.
+    The add() method adds or replaces an item with an optional timeout. (
+    Items added or replaced with [] access do not have timeouts.) Before any
+    individual access to an item, its timeout is checked, and the item is
+    removed if timeout has expired. Before potentially adding an item,
+    timeouts of all items are checked.
 
     The hold() method is a context manager and is intended to be used with the
     "with" statement. The item is added when entering the context, and removed

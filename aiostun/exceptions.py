@@ -35,6 +35,7 @@ class STUNAttributeParseError(STUNMessageParseError, ValueError):
     """
     pass
 
+
 class STUNTransactionTimeout(STUNError, TimeoutError):
     """STUN transaction timed out.
 

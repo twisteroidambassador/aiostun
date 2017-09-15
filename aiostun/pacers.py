@@ -1,7 +1,6 @@
 import typing
 import ipaddress
 import logging
-from collections import namedtuple
 
 from .utils import HoldExpiringMapping
 
