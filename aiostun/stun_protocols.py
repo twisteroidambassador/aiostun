@@ -328,7 +328,7 @@ class STUNController:
 
     async def send_request(self, builder: 'STUNMessageBuilder', remote_addr,
                            key=None, require_fingerprint=None, *, pacer=None):
-        """Send a STUN request and wait for a response.
+        """Send a STUN request and wait for a response. This is a coroutine.
 
         Arguments:
 
@@ -434,3 +434,24 @@ class STUNController:
                 and parser.check_message_integrity(key)):
             return None
         return ret
+
+    def send_indication(self, builder: 'STUNMessageBuilder', remote_addr):
+        """Send a STUN indication.
+
+        Arguments:
+
+        builder: a STUNMessageBuilder for the message to be sent.
+
+        remote_addr: address to send to. This should be a tuple returned
+        by getaddrinfo(), get_endpoints_towards() or similar. The first element
+        of the tuple must be an IP address, not a host name.
+        """
+        if self._conn_lost:
+            if self._conn_lost > LOG_THRESHOLD_FOR_CONNLOST_WRITES:
+                self._logger.warning(
+                    'Attempted to send STUN message after connection lost')
+            self._conn_lost += 1
+            return
+        self._logger.debug('Sending STUN indication')
+        msg = builder.build()
+        self._transport.sendto(msg, remote_addr)
