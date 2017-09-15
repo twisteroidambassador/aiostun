@@ -11,7 +11,7 @@ This is a work in progress. Features supported so far:
   - Automatically retransmits requests and handles RTO
 * Supports authentication: both long-term and short-term credentials
 
-###STUN Client Example: 
+### STUN Client Example: 
 
     controller = STUNController(None)
     transport, protocol = await controller.create_datagram_endpoint(
@@ -23,7 +23,7 @@ This is a work in progress. Features supported so far:
 
 Also see the various example scripts.
 
-###Todo:
+### Todo:
 
 * ICE support.
 * TURN support.
